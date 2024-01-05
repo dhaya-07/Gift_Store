@@ -28,14 +28,14 @@ const Register = () => {
       setErrors(validationErrors);
       return;
     }
-  
+
     try {
       // Check if the username or email already exists in the database
       const users = await axios.get('http://localhost:3001/users');
       const foundUser = users.data.find(
         (user) => user.username === formData.username || user.email === formData.email
       );
-  
+
       if (foundUser) {
         if (foundUser.username === formData.username) {
           setErrors({ ...errors, username: 'Username already exists' });
@@ -45,10 +45,11 @@ const Register = () => {
         }
         return;
       }
-  
+
       // If no existing user found, proceed with registration
       const response = await axios.post('http://localhost:3001/users', formData);
       console.log('Registration successful!', response.data);
+      window.location.href='/login'
       // Redirect or handle success as needed
     } catch (error) {
       console.error('Registration failed!', error);
@@ -56,61 +57,67 @@ const Register = () => {
     }
   };
 
-    const validateForm = (data) => {
-      const errors = {};
-      if (!data.firstName) {
-        errors.firstName = 'First Name is required';
-      }
-      if (!data.lastName) {
-        errors.lastName = 'Last Name is required';
-      }
-      if (!data.username) {
-        errors.username = 'Username is required';
-      }
-      if (!data.email) {
-        errors.email = 'Email is required';
-      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-        errors.email = 'Invalid email address';
-      }
-      if (!data.gender) {
-        errors.gender = 'Gender is required';
-      }
-      if (!data.password) {
-        errors.password = 'Password is required';
-      } else if (!/(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(data.password)) {
-        errors.password =
-          'Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one digit, and one special character';
-      }
-      if (data.password !== data.confirmPassword) {
-        errors.confirmPassword = 'Passwords do not match';
-      }
-      return errors;
-    };
+  const validateForm = (data) => {
+    const errors = {};
+    if (!data.firstName) {
+      errors.firstName = 'First Name is required';
+    }
+    if (!data.lastName) {
+      errors.lastName = 'Last Name is required';
+    }
+    if (!data.username) {
+      errors.username = 'Username is required';
+    }
+    if (!data.email) {
+      errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+      errors.email = 'Invalid email address';
+    }
+    if (!data.gender) {
+      errors.gender = 'Gender is required';
+    }
+    if (!data.password) {
+      errors.password = 'Password is required';
+    } else if (
+      !/(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(data.password)
+    ) {
+      errors.password =
+        'Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one digit, and one special character';
+    }
+    if (data.password !== data.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+    return errors;
+  };
 
-    return (
-          <form onSubmit={handleSubmit}>
-            <div style={{
-              marginLeft: '500px',
-              marginTop: '35px',
-              backgroundColor: '#f0f0f785',
-              color: 'black',
-              padding: '40px',
-              width: '420px',
-              borderRadius: '30px'}} >
-          <h3>Registration Form</h3>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                onChange={handleChange}
-                className="form-control"
-              />
-              {errors.firstName && (
-                <span className="error">
-                  <i className="zmdi zmdi-close-circle"></i> {errors.firstName}
-                </span>
-              )}<br/>
-              <input
+  return (
+    <form onSubmit={handleSubmit}>
+      <div
+        style={{
+          marginLeft: '550px',
+          marginTop: '15px',
+          backgroundColor: '#f0f0f785',
+          color: 'black',
+          padding: '30px',
+          width: '420px',
+          borderRadius: '30px',
+        }}
+      >
+        <h3>Registration Form</h3><br/>
+        <input
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          onChange={handleChange}
+          className="form-control"
+        />
+        {errors.firstName && (
+          <span className="error">
+            <i className="zmdi zmdi-close-circle"></i> {errors.firstName}
+          </span>
+        )}
+        <br />
+        <input
                 type="text"
                 name="lastName"
                 placeholder="Last Name"
@@ -148,8 +155,6 @@ const Register = () => {
                 </span>
               )}
               <br/>
-            
-            
               <select id="" className="form-control" name="gender" onChange={handleChange}>
                 <option value="" disabled selected>
                   Gender
@@ -163,7 +168,6 @@ const Register = () => {
                   <i className="zmdi zmdi-close-circle"></i> {errors.gender}
                 </span>
               )}
-            
             <br/>
               <input
                 type="password"
@@ -177,7 +181,6 @@ const Register = () => {
                   <i className="zmdi zmdi-close-circle"></i> {errors.password}
                 </span>
               )}
-            
             <br/>
               <input
                 type="password"
@@ -191,25 +194,39 @@ const Register = () => {
                   <i className="zmdi zmdi-close-circle"></i> {errors.confirmPassword}
                 </span>
               )}
+        {/* Other input fields and error messages */}
+        <p>
+          Already have an account?{''}
+          <Link to='/login' className='link signup-link'>Login</Link>
+        </p>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: '#4CAF50',
+            border: 'none',
+            color: 'white',
+            padding: '15px 32px',
+            textAlign: 'center',
+            textDecoration: 'none',
+            display: 'inline-block',
+            fontSize: '16px',
+            margin: '4px 2px',
+            transitionDuration: '0.4s',
+            cursor: 'pointer',
+            borderRadius: '10px',
+            // border: '2px solid #4CAF50',
+          }}
+        >
+          Register
+          <i className="zmdi zmdi-arrow-right" />
+        </button>
+      </div>
+    </form>
+  );
+};
 
-              <p>
-                Already have an account?{' '}
-                <Link to="/login" className="link">
-                  Login
-                </Link>
-              </p>
-            
-            <button variant="contained" type="submit">
-              Register
-              <i className="zmdi zmdi-arrow-right" />
-            </button>
-        </div>
-          </form>
-      
-    );
-  };
+export default Register;
 
-  export default Register;
 // import { Link } from 'react-router-dom';
 // import '../assets/styles/navbar.css'
 // import { Button } from '@mui/material';

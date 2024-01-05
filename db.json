@@ -9,6 +9,56 @@
       "confirmPassword": "Dhaya@123",
       "gender": "male",
       "id": 1
+    },
+    {
+      "firstName": "m",
+      "lastName": "k",
+      "username": "mk",
+      "email": "mk12121@gmail.com",
+      "password": "Madan00@",
+      "confirmPassword": "Madan00@",
+      "gender": "male",
+      "id": 2
+    },
+    {
+      "firstName": "kk",
+      "lastName": "kk",
+      "username": "kkkk",
+      "email": "kk@123gmail.com",
+      "password": "Kkkk@123",
+      "confirmPassword": "Kkkk@123",
+      "gender": "male",
+      "id": 3
+    },
+    {
+      "firstName": "krish",
+      "lastName": "nan",
+      "username": "krish",
+      "email": "krish@gmail.com",
+      "password": "Krish@123",
+      "confirmPassword": "Krish@123",
+      "gender": "male",
+      "id": 4
+    },
+    {
+      "firstName": "kaadhal",
+      "lastName": "mannan",
+      "username": "krishnan",
+      "email": "kaadhalmannan@gmail.com",
+      "password": "Kaadhal@123",
+      "confirmPassword": "Kaadhal@123",
+      "gender": "male",
+      "id": 5
+    },
+    {
+      "firstName": "dhaya",
+      "lastName": "karan",
+      "username": "Dhayakaran",
+      "email": "22cse.murugandhayakaran@skct.edu.in",
+      "password": "Dhaya@1234",
+      "confirmPassword": "Dhaya@1234",
+      "gender": "male",
+      "id": 6
     }
   ]
 }

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import  Button  from  '@mui/material/Button';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import "../assets/styles/navbar.css"
+// import  Button  from  '@mui/material/Button';
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
 import axios from 'axios';
 
 const Login = () => {
@@ -34,6 +35,7 @@ const Login = () => {
       });
       if (response.data.length > 0) {
         console.log('Login successful!');
+        window.location.href='/'
         // Redirect or handle successful login
       } else {
         console.log('Login failed! Invalid credentials.');
@@ -56,52 +58,44 @@ const Login = () => {
     return errors;
   };
 
-  return (
-    
-        
-        <form className="form" onSubmit={handleSubmit}>
-
-          <div style={{
-              marginLeft: '500px',
-              marginTop: '200px',
-              backgroundColor: '#f0f0f785',
-              color: 'black',
-              padding: '40px',
-              width: '420px',
-              borderRadius: '30px'}}>
-          <h3>Login</h3>
-            <input
-              type="text"
-              name="username"
-              onChange={handleChange}
-              placeholder="Username or Email"
-              className="form-control"
-            />
-            {errors.username && <span className="error">{errors.username}</span>}
-          
-            <br/>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              placeholder="Password"
-              className="form-control"
-            />
-            {errors.password && <span className="error">{errors.password}</span>}
-         
-
-          
-            <p>Don't have an account <Link to='/register' className='link'>Signup</Link></p>
-          
-
-          <button className="glow-on-hover" type='submit'>Login</button>
+  return (    
+    <form className="form" onSubmit={handleSubmit}>
+      <div style={{
+        marginLeft: '500px',
+        marginTop: '200px',
+        backgroundColor: '#f0f0f785',
+        color: 'black',
+        padding: '40px',
+        width: '420px',
+        borderRadius: '30px',
+      }}>
+        <h3>Login</h3>
+        <input
+          type="text"
+          name="username"
+          onChange={handleChange}
+          placeholder="Username or Email"
+          className="form-control"
+        />
+        {errors.username && <span className="error">{errors.username}</span>}
+        <br/>
+        <input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          placeholder="Password"
+          className="form-control"
+        />
+        {errors.password && <span className="error">{errors.password}</span>}
+        <p>Don't have an account? <Link to='/register' className='link signup-link'>Signup</Link></p>
+        <button className="glow-on-hover custom-button" type='submit'>Login</button>
       </div>
-        </form>
-    
+    </form>
   );
 };
 
 export default Login;
+
 // import '../assets/styles/navbar.css'
 // function Login()
 // {

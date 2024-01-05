@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../assets/styles/navbar.css'
 import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
 
@@ -41,6 +42,7 @@ const Cards = () => {
     <Grid container spacing={3}>
       {cardsData.map((card, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
+          <Link to="/Cards">
           <Card className='font'>
             <CardMedia
               component="img"
@@ -57,6 +59,7 @@ const Cards = () => {
               </Typography>
             </CardContent>
           </Card>
+          </Link>
         </Grid>
       ))}
     </Grid>

@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="footer-section">
           <h2>About Us</h2>
           <p>
-            We are dedicated to providing fresh, organic fruits and vegetables to promote a healthy lifestyle.
+            We are dedicated to providing fresh, cakes and gifts to promote a lifestyle.
           </p>
         </div>
 

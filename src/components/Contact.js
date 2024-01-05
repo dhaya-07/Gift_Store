@@ -36,7 +36,7 @@ function Contact()
             borderRadius: '30px'
         }}>
             <h2 style={{textAlign:'center',backgroundColor: '#3a16014b', padding: '8px'
-            }}>Contact Us</h2>
+            }}>Contact Us</h2><br/>
             <form>
                  <TextField id="standard-basic" label="Any Query" variant="standard" />
                 <br></br><br></br>
