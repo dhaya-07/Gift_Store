@@ -3,8 +3,8 @@ nav{
     justify-content: space-between;
     padding: 0 30px;
     align-items: center;
-    background-color: rgb(5, 93, 208);
-    margin-top: 50px;
+    background-color: rgb(107, 103, 103);
+    margin-top: 0px;
     display: flex;
 }
 ul{
@@ -16,7 +16,7 @@ li{
     padding: 10px;
 }
 li:hover:not(.active){
-    background-color: rgb(67, 192, 255);
+    background-color: rgb(161, 164, 167);
     color: rgb(3, 14, 17);
 }
 .active{
@@ -34,18 +34,54 @@ input{
 }
 .signup
 {
-    color: aliceblue;
+    color: rgb(66, 67, 68);
 }
 .account
 {
-    color: rgb(255, 250, 250);
+    color:rgb(19, 18, 18);
 }
 .loginc
 {
-    color: aliceblue;
+    color: rgb(92, 93, 94);
 }
 .logo
 {
     height: 35px;
     width: 30px;
 }
+logincolor
+{
+    background-color: rgba(255, 254, 254, 0.093);
+}
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    color: aliceblue;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+  }
+.tranding
+{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: xx-large;
+    background-color: bisque;
+    
+}
+.font
+{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.querys
+{
+    overflow: hidden;
+}
+.colors
+{
+    color: aliceblue;
+}
+/* .colors1
+{
+    color: aliceblue;
+} */

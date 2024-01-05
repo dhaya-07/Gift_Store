@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
-import Navbar from './components/navbar';
+import Navbar from './components/navbar.js';
+// import Contact from './components/contact.js';
 
 function App() {
   return (
@@ -8,7 +8,6 @@ function App() {
       <Navbar />
       
     </div>
-    
   );
 }
 

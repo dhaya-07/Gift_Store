@@ -1,41 +1,285 @@
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import '../assets/styles/navbar.css'
-import Login from './login';
-function  Register()
-{
-    return(
-        <div style={{
-            marginLeft: '500px',
-            marginTop: '45px',
-            backgroundColor: '#406ecb',
-            color: 'white',
-            padding: '90px',
-            width: '320px',
-            borderRadius: '30px'}}>
-             <h1>Sign Up</h1>
-            <form>
-                <label>FirstName:
-                    <input type="text" />
-                </label><br></br><br></br>
-                <label>LastName:
-                    <input type="text" />
-                </label>
-                <br></br><br></br>
-                <label>Date Of Birth:
-                    <input type="date" />
-                </label>
-                <br></br><br></br>
-                <label>Mobile No:
-                    <input type="text" />
-                </label><br></br><br></br>
-                <label>Email address:
-                    <input type="text" />
-                </label>
-            </form>
-            <p>Already have account? <Link to='/Login' className='loginc'>Login</Link></p>
-            <button>
-                <Link to='/login'>Sign Up</Link></button>
+
+const Register = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    gender: '',
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: '' });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+  
+    try {
+      // Check if the username or email already exists in the database
+      const users = await axios.get('http://localhost:3001/users');
+      const foundUser = users.data.find(
+        (user) => user.username === formData.username || user.email === formData.email
+      );
+  
+      if (foundUser) {
+        if (foundUser.username === formData.username) {
+          setErrors({ ...errors, username: 'Username already exists' });
+        }
+        if (foundUser.email === formData.email) {
+          setErrors({ ...errors, email: 'Email already exists' });
+        }
+        return;
+      }
+  
+      // If no existing user found, proceed with registration
+      const response = await axios.post('http://localhost:3001/users', formData);
+      console.log('Registration successful!', response.data);
+      // Redirect or handle success as needed
+    } catch (error) {
+      console.error('Registration failed!', error);
+      // Handle error scenarios
+    }
+  };
+
+    const validateForm = (data) => {
+      const errors = {};
+      if (!data.firstName) {
+        errors.firstName = 'First Name is required';
+      }
+      if (!data.lastName) {
+        errors.lastName = 'Last Name is required';
+      }
+      if (!data.username) {
+        errors.username = 'Username is required';
+      }
+      if (!data.email) {
+        errors.email = 'Email is required';
+      } else if (!/\S+@\S+\.\S+/.test(data.email)) {
+        errors.email = 'Invalid email address';
+      }
+      if (!data.gender) {
+        errors.gender = 'Gender is required';
+      }
+      if (!data.password) {
+        errors.password = 'Password is required';
+      } else if (!/(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(data.password)) {
+        errors.password =
+          'Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one digit, and one special character';
+      }
+      if (data.password !== data.confirmPassword) {
+        errors.confirmPassword = 'Passwords do not match';
+      }
+      return errors;
+    };
+
+    return (
+          <form onSubmit={handleSubmit}>
+            <div style={{
+              marginLeft: '500px',
+              marginTop: '35px',
+              backgroundColor: '#f0f0f785',
+              color: 'black',
+              padding: '40px',
+              width: '420px',
+              borderRadius: '30px'}} >
+          <h3>Registration Form</h3>
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.firstName && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.firstName}
+                </span>
+              )}<br/>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.lastName && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.lastName}
+                </span>
+              )}<br/>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.username && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.username}
+                </span>
+              )}
+              <br/>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.email && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.email}
+                </span>
+              )}
+              <br/>
+            
+            
+              <select id="" className="form-control" name="gender" onChange={handleChange}>
+                <option value="" disabled selected>
+                  Gender
+                </option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              {errors.gender && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.gender}
+                </span>
+              )}
+            
+            <br/>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.password && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.password}
+                </span>
+              )}
+            
+            <br/>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                onChange={handleChange}
+                className="form-control"
+              />
+              {errors.confirmPassword && (
+                <span className="error">
+                  <i className="zmdi zmdi-close-circle"></i> {errors.confirmPassword}
+                </span>
+              )}
+
+              <p>
+                Already have an account?{' '}
+                <Link to="/login" className="link">
+                  Login
+                </Link>
+              </p>
+            
+            <button variant="contained" type="submit">
+              Register
+              <i className="zmdi zmdi-arrow-right" />
+            </button>
         </div>
-    )
-}
-export default Register;
+          </form>
+      
+    );
+  };
+
+  export default Register;
+// import { Link } from 'react-router-dom';
+// import '../assets/styles/navbar.css'
+// import { Button } from '@mui/material';
+// import Box from '@mui/material/Box';
+// import TextField from '@mui/material/TextField';
+
+// function  Register()
+// {
+//     return(
+      //   <Box
+      //   component="form"
+      //   sx={{
+      //     '& .MuiTextField-root': { m: 1, width: '25ch' },
+      //   }}
+      //   noValidate
+      //   autoComplete="off"
+      // > 
+//         <div style={{
+//             marginLeft: '500px',
+//             marginTop: '35px',
+//             backgroundColor: '#f0f0f785',
+//             color: 'black',
+//             padding: '40px',
+//             width: '420px',
+//             borderRadius: '30px'}}>
+//              <h1>Sign Up</h1>
+//             <form>
+//             <TextField className='textfield'
+//           required
+//           id="outlined-required"
+//           label="FirstName"
+//           defaultValue=""
+//         />
+//                 <br></br>
+//                 <TextField className='textfield'
+//           required
+//           id="outlined-required"
+//           label="LastName"
+//           defaultValue=""
+//         />
+//                 <br></br>
+//                 {/* <TextField className='textfield'
+//           required
+//           id="outlined-required"
+//           label="DateOfBirth"
+//           defaultValue=""
+//         /> */}
+              
+          //       <TextField className='textfield'
+          // required
+          // id="outlined-required"
+          // label="Mobile No"
+          // defaultValue=""
+        // />
+//                 <br></br>
+//                 <TextField className='textfield'
+//           required
+//           id="outlined-required"
+//           label="Email Address"
+//           defaultValue=""
+//         />
+//             </form>
+//             <p>Already have account? <Link to='/login' className='login'>Login</Link></p>
+//             {/* <button>
+//                 <Link to='/login'>Sign Up</Link></button> */}
+//                 <Button variant="contained" className='logincolor'>
+//                     <Link to='/login' className='colors' style={{textDecoration:"none"}}>Sign Up</Link>
+//                     </Button>
+//         </div>
+//         </Box>
+//     )
+// }
+// export default Register;

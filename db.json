@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "firstName": "dhaya",
+      "lastName": "karan",
+      "username": "Dhaya karan",
+      "email": "dhayakaranmurugan07@gmail.com",
+      "password": "Dhaya@123",
+      "confirmPassword": "Dhaya@123",
+      "gender": "male",
+      "id": 1
+    }
+  ]
+}
